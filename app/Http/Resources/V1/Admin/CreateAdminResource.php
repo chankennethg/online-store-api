@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @mixin \App\Models\User
  */
-class AdminLoginResource extends JsonResource
+class CreateAdminResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,9 +19,13 @@ class AdminLoginResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'email' => $this->email,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'email' => $this->email,
+            'address' => $this->address,
+            'phone_number' => $this->phone_number,
+            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at,
             'token' => $this->createToken($this->uuid)->plainTextToken,
         ];
     }
