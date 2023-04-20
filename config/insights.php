@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
-
 return [
 
     /*
@@ -73,35 +70,39 @@ return [
     'add' => [],
 
     'remove' => [
-        NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid::class,
-        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
-        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits::class,
-        NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
-        ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
-        ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff::class,
-        PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer::class,
-        SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff::class,
-        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
-        SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,
-        SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff::class,
-        SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff ::class,
-        SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,
-        SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
-        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
-        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
-        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
+        // Code
+        SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,                     // Declare strict types
+        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,                  // Forbidden public property
+        PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class,                              // Visibility required
+        SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff::class,                  // Class constant visibility
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,                  // Disallow empty
+        PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer::class,                                        // No empty comment
+        SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class,             // Useless function doc comment
+        SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff::class,                  // Mixed type hint
+        SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,                       // Property Type hint sniffs, let larastan do its work.
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,   // Disallow short ternary (?:)
+
+        // Architecture
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,                       // Normal classes are forbidden
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits::class,                              // Traits are forbidden
+        NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid::class,                 // Valid Composer
+
+        // Style
+        PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer::class,                            // Ordered class elements
+        PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer::class,                                    // Single quote
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,                       // Todo sniff
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterCastSniff::class,             // Space after cast
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,              // Space after not
+        SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,                     // Doc comment spacing
+
     ],
 
     'config' => [
-        ForbiddenPrivateMethods::class => [
-            'title' => 'The usage of private methods is not idiomatic in Laravel.',
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
+            'maxLinesLength' => 45,
+        ],
+        \NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
+            'maxComplexity' => 8,
         ],
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,

@@ -267,7 +267,7 @@ endif
 phpinsights: ## Runs Php Insights analysis tool
 ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
 	@echo "\033[32mRunning PHP Insights\033[39m"
-	@php -d error_reporting=0 artisan insights
+	@php -d error_reporting=0 artisan insights -v
 else
 	@make exec cmd="make phpinsights"
 endif
